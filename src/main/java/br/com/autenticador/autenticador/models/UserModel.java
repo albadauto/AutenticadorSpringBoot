@@ -2,8 +2,10 @@ package br.com.autenticador.autenticador.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
@@ -15,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TBUSU")
-public class UserModel implements UserDetails{
+public class UserModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int Id;
@@ -25,10 +27,27 @@ public class UserModel implements UserDetails{
     private String password;
     @Column(name = "USUNAME")
     private String name;
-    @Override
+    @Column(name = "USUROLE")
+    private String role;
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
         return new ArrayList<>();
     }
 
@@ -47,38 +66,42 @@ public class UserModel implements UserDetails{
     public int getId() {
         return Id;
     }
+
     public void setId(int id) {
         Id = id;
     }
 
     @Override
     public String getPassword() {
-       return this.password;
+        return this.password;
     }
+
     @Override
     public String getUsername() {
         return this.name;
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return true;
 
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
 
     }
+
     @Override
     public boolean isEnabled() {
         return true;
 
     }
-
-
 
 }

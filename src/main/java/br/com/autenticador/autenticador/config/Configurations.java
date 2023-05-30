@@ -33,8 +33,11 @@ public class Configurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/Auth/CreateUser").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/Auth/ReturnAllUsers").permitAll()
                         .requestMatchers(HttpMethod.POST, "/Auth/Login").permitAll()
-                        .anyRequest().authenticated()).addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class).build(); //Continuar
+                        .anyRequest().authenticated())
+                        .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                        .build(); //Continuar
             
     }
 

@@ -1,5 +1,7 @@
 package br.com.autenticador.autenticador.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,11 +38,13 @@ public class AuthenticationController {
         return "Ola mundo";
     }
 
+
     @PostMapping("/CreateUser")
     public ResponseEntity<?> CreateUser(@RequestBody UserModel user){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         if(userRepository.findByEmail(user.getEmail()) != null){
+
             return ResponseEntity.badRequest().body(new ResponseModel<>(){{
                 success = false;
                 message = "Erro: email já existe na base";
@@ -54,6 +58,7 @@ public class AuthenticationController {
             data = null;
         }});
     }
+
 
     @PostMapping("/Login")
     public ResponseEntity<?> Login(@RequestBody UserDTO dto){
